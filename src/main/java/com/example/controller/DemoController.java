@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.Repository.UserRepository;
@@ -18,7 +19,7 @@ public class DemoController {
 	@Autowired
 	UserRepository repos;
 	
-	@RequestMapping("/")
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView index(@ModelAttribute("formModel") User user,ModelAndView mav) {
 		mav.setViewName("index");
         Iterable<User> list = repos.findAll();
@@ -26,7 +27,7 @@ public class DemoController {
         return mav;
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping(value="/", method=RequestMethod.POST)
 	@Transactional(readOnly=false)
 	public ModelAndView form(@ModelAttribute("formModel") User user,ModelAndView mav) {
         repos.saveAndFlush(user);
